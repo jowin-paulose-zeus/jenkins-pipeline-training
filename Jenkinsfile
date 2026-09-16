@@ -15,6 +15,20 @@ pipeline {
             }
         }
 
+        stage('Credentials Demo') {
+            steps {
+                withCredentials([
+                    string(
+                        credentialsId: 'demo-secret',
+                        variable: 'MY_SECRET'
+                    )
+                ]) {
+                    sh 'echo "Secret is available to the pipeline"'
+                    sh 'echo "Secret length: ${#MY_SECRET}"'
+                }
+            }
+        }
+
         stage('Deploy') {
             steps {
                 echo 'Deploying the project...'

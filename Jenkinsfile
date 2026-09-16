@@ -27,4 +27,4 @@ pipeline {
             junit 'test-results.xml'
         }
     }
-}p
+}

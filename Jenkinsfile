@@ -11,9 +11,7 @@ pipeline {
         stage('Test') {
             steps {
                 sh '''
-                    python3 -m venv .venv
-                    .venv/bin/pip install -r requirements.txt
-                    .venv/bin/pytest --junitxml=test-results.xml
+                    python3 -m unittest discover -s tests -p "test_*.py" -v
                 '''
             }
         }
@@ -22,12 +20,6 @@ pipeline {
             steps {
                 echo 'Deploying the project...'
             }
-        }
-    }
-
-    post {
-        always {
-            junit 'test-results.xml'
         }
     }
 }

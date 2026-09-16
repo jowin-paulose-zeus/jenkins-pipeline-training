@@ -11,8 +11,9 @@ pipeline {
         stage('Test') {
             steps {
                 sh '''
-                    python3 -m pip install -r requirements.txt
-                    pytest --junitxml=test-results.xml
+                    python3 -m venv .venv
+                    .venv/bin/pip install -r requirements.txt
+                    .venv/bin/pytest --junitxml=test-results.xml
                 '''
             }
         }

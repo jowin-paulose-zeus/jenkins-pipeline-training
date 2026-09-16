@@ -10,7 +10,10 @@ pipeline {
 
         stage('Test') {
             steps {
-                echo 'Running tests...'
+                sh '''
+                    python3 -m pip install -r requirements.txt
+                    pytest --junitxml=test-results.xml
+                '''
             }
         }
 
@@ -18,6 +21,12 @@ pipeline {
             steps {
                 echo 'Deploying the project...'
             }
+        }
+    }
+
+    post {
+        always {
+            junit 'test-results.xml'
         }
     }
 }

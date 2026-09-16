@@ -1,4 +1,4 @@
-pipeline {
+spipeline {
     agent any
 
     stages {
@@ -9,9 +9,16 @@ pipeline {
         }
 
         stage('Test') {
+            agent {
+                docker {
+                    image 'docker-registry-002.zeuslearning.com/zeuslearning/python:3.12-slim'
+                    reuseNode true
+                }
+            }
+
             steps {
                 sh '''
-                    python3 -m pip install -r requirements.txt
+                    pip install -r requirements.txt
                     pytest --junitxml=test-results.xml
                 '''
             }

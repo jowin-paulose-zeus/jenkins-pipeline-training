@@ -2,6 +2,7 @@ pipeline {
     agent any
 
     stages {
+
         stage('Build') {
             steps {
                 echo 'Building the project...'
@@ -10,9 +11,7 @@ pipeline {
 
         stage('Test') {
             steps {
-                sh '''
-                    python3 -m unittest discover -s tests -p "test_*.py" -v
-                '''
+                sh 'python3 run_tests.py'
             }
         }
 
@@ -22,4 +21,10 @@ pipeline {
             }
         }
     }
-}
+
+    post {
+        always {
+            junit 'test-results.xml'
+        }
+    }
+}p
